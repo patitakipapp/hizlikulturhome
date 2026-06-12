@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hızlı Kültür — Genel Kültür ve Quiz Uygulaması</title>
+<meta name="description" content="Hızlı Kültür: Tarih, bilim, sanat ve daha fazlasında merak uyandıran kısa bilgi kartları ve quizlerle her gün biraz daha bilgili olun." />
+<meta name="theme-color" content="#0e0a10" />
+
+<!-- Open Graph -->
+<meta property="og:title" content="Hızlı Kültür" />
+<meta property="og:description" content="Kısa bilgi kartları ve quizlerle her gün biraz daha bilgili olun." />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="logo.jpeg" />
+
+<link rel="icon" href="logo.jpeg" />
+<link rel="apple-touch-icon" href="logo.jpeg" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Spectral:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    --bg:        #0e0a10;
+    --bg-2:      #15101a;
+    --surface:   #1c1620;
+    --surface-2: #241c29;
+    --marble:    #f3ece2;
+    --ink:       #efe7dd;
+    --muted:     #b3a79c;
+    --faint:     #7e7468;
+    --accent:    #de5233;
+    --accent-br: #f5704a;
+    --line:      rgba(243, 236, 226, 0.10);
+    --radius:    20px;
+    --maxw:      1120px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Spectral', Georgia, serif;
+    font-weight: 400;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  /* Atmospheric background: warm glow + fine grain */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    background:
+      radial-gradient(900px 600px at 78% -8%, rgba(222, 82, 51, 0.20), transparent 60%),
+      radial-gradient(700px 700px at 8% 12%, rgba(82, 56, 96, 0.30), transparent 55%),
+      linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+  }
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    opacity: 0.04;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .wrap { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 28px; }
+
+  a { color: inherit; text-decoration: none; }
+
+  /* ---------- NAV ---------- */
+  header {
+    position: sticky; top: 0; z-index: 50;
+    backdrop-filter: blur(14px);
+    background: rgba(14, 10, 16, 0.55);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav { display: flex; align-items: center; justify-content: space-between; height: 70px; }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand img { width: 38px; height: 38px; border-radius: 9px; box-shadow: 0 4px 18px rgba(0,0,0,.5); }
+  .brand b {
+    font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.18rem;
+    letter-spacing: .2px;
+  }
+  .nav-links { display: flex; gap: 30px; font-size: .92rem; color: var(--muted); }
+  .nav-links a { transition: color .2s; }
+  .nav-links a:hover { color: var(--ink); }
+  @media (max-width: 720px) { .nav-links { display: none; } }
+
+  /* ---------- HERO ---------- */
+  .hero { position: relative; padding: 96px 0 70px; }
+  .hero-grid {
+    display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 56px; align-items: center;
+  }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 9px;
+    font-family: 'Spectral', serif; font-size: .82rem; letter-spacing: .22em;
+    text-transform: uppercase; color: var(--accent-br); font-weight: 500;
+    margin-bottom: 26px;
+  }
+  .eyebrow::before { content: ""; width: 26px; height: 1px; background: var(--accent); display: inline-block; }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: clamp(2.9rem, 6.4vw, 5rem);
+    line-height: 1.02;
+    letter-spacing: -0.015em;
+  }
+  h1 em { font-style: italic; color: var(--accent-br); }
+
+  .lede {
+    margin-top: 26px; font-size: 1.18rem; color: var(--muted);
+    max-width: 30ch; line-height: 1.65;
+  }
+
+  .cta-row { margin-top: 38px; display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: 'Spectral', serif; font-size: 1rem; font-weight: 500;
+    padding: 14px 26px; border-radius: 999px; transition: transform .2s, box-shadow .2s, background .2s;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent-br), var(--accent));
+    color: #fff; box-shadow: 0 10px 30px rgba(222, 82, 51, .35);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 38px rgba(222, 82, 51, .5); }
+  .btn-ghost { border: 1px solid var(--line); color: var(--ink); }
+  .btn-ghost:hover { background: var(--surface); transform: translateY(-2px); }
+
+  .soon { font-size: .82rem; color: var(--faint); letter-spacing: .04em; }
+
+  /* Hero phone mock */
+  .phone-stage { position: relative; display: flex; justify-content: center; }
+  .glow-ring {
+    position: absolute; width: 360px; height: 360px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(222,82,51,.32), transparent 65%);
+    filter: blur(18px); z-index: 0;
+  }
+  .phone {
+    position: relative; z-index: 1;
+    width: 268px; aspect-ratio: 9 / 19.2;
+    border-radius: 42px;
+    background: linear-gradient(160deg, #2a2230, #17121c);
+    border: 1px solid rgba(243,236,226,.14);
+    box-shadow: 0 40px 90px rgba(0,0,0,.6), inset 0 0 0 6px #0b0810;
+    padding: 14px;
+    transform: rotate(2.2deg);
+  }
+  .phone-screen {
+    width: 100%; height: 100%; border-radius: 30px; overflow: hidden;
+    background: radial-gradient(120% 80% at 50% 0%, #241829, #0e0a10);
+    display: flex; flex-direction: column; padding: 26px 20px;
+  }
+  .ph-notch {
+    width: 86px; height: 6px; border-radius: 99px; background: rgba(243,236,226,.25);
+    margin: 0 auto 24px;
+  }
+  .ph-tag { font-size: .68rem; letter-spacing: .2em; text-transform: uppercase; color: var(--accent-br); margin-bottom: 14px; }
+  .ph-card {
+    background: rgba(243,236,226,.05); border: 1px solid var(--line);
+    border-radius: 18px; padding: 18px 16px; margin-top: auto; margin-bottom: auto;
+  }
+  .ph-card .cat { font-size: .72rem; color: var(--faint); margin-bottom: 10px; letter-spacing:.04em;}
+  .ph-card p { font-family: 'Fraunces', serif; font-size: 1.02rem; line-height: 1.4; color: var(--ink); }
+  .ph-dots { display:flex; gap:6px; justify-content:center; margin-top: 22px; }
+  .ph-dots span { width:6px; height:6px; border-radius:50%; background: rgba(243,236,226,.2); }
+  .ph-dots span:first-child { background: var(--accent-br); width:18px; border-radius:99px; }
+
+  /* ---------- Marquee categories ---------- */
+  .strip { border-block: 1px solid var(--line); padding: 22px 0; margin-top: 30px; overflow: hidden; }
+  .marquee { display: flex; gap: 42px; white-space: nowrap; width: max-content; animation: slide 34s linear infinite; }
+  .marquee span { font-family: 'Fraunces', serif; font-size: 1.25rem; color: var(--muted); display: inline-flex; gap: 12px; align-items: center; }
+  .marquee span::after { content: "·"; color: var(--accent); margin-left: 42px; }
+  @keyframes slide { to { transform: translateX(-50%); } }
+
+  /* ---------- Sections ---------- */
+  section { padding: 92px 0; }
+  .sec-head { max-width: 620px; margin-bottom: 56px; }
+  .sec-head .eyebrow { margin-bottom: 18px; }
+  .sec-head h2 {
+    font-family: 'Fraunces', serif; font-weight: 400;
+    font-size: clamp(2rem, 4vw, 3rem); line-height: 1.08; letter-spacing: -.01em;
+  }
+  .sec-head p { margin-top: 18px; color: var(--muted); font-size: 1.1rem; }
+
+  .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .card {
+    background: linear-gradient(180deg, var(--surface), var(--bg-2));
+    border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 34px 30px; transition: transform .25s, border-color .25s;
+    position: relative; overflow: hidden;
+  }
+  .card:hover { transform: translateY(-5px); border-color: rgba(222,82,51,.4); }
+  .card .ic {
+    width: 52px; height: 52px; border-radius: 14px; display: grid; place-items: center;
+    font-size: 1.5rem; margin-bottom: 22px;
+    background: rgba(222,82,51,.12); border: 1px solid rgba(222,82,51,.25);
+  }
+  .card h3 { font-family: 'Fraunces', serif; font-weight: 500; font-size: 1.35rem; margin-bottom: 10px; }
+  .card p { color: var(--muted); font-size: 1rem; }
+
+  /* ---------- Categories grid ---------- */
+  .cats { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+  .cat-chip {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 16px;
+    padding: 22px 16px; text-align: center; transition: transform .2s, background .2s;
+  }
+  .cat-chip:hover { transform: translateY(-4px); background: var(--surface-2); }
+  .cat-chip .em { font-size: 1.9rem; display: block; margin-bottom: 12px; }
+  .cat-chip b { font-family: 'Fraunces', serif; font-weight: 500; font-size: .98rem; display: block; }
+
+  /* ---------- CTA band ---------- */
+  .band {
+    margin: 40px 0 0; border-radius: 28px; padding: 64px 48px; text-align: center;
+    background:
+      radial-gradient(600px 300px at 50% 0%, rgba(222,82,51,.22), transparent 70%),
+      linear-gradient(160deg, var(--surface-2), var(--bg-2));
+    border: 1px solid var(--line); position: relative; overflow: hidden;
+  }
+  .band img { width: 76px; height: 76px; border-radius: 18px; margin-bottom: 24px; box-shadow: 0 12px 34px rgba(0,0,0,.5); }
+  .band h2 { font-family: 'Fraunces', serif; font-weight: 400; font-size: clamp(2rem, 4vw, 2.8rem); margin-bottom: 16px; }
+  .band p { color: var(--muted); max-width: 46ch; margin: 0 auto 32px; font-size: 1.1rem; }
+
+  /* ---------- Footer ---------- */
+  footer { border-top: 1px solid var(--line); padding: 54px 0 64px; margin-top: 40px; }
+  .foot-grid { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 30px; align-items: flex-start; }
+  .foot-brand { display:flex; align-items:center; gap:12px; }
+  .foot-brand img { width: 34px; height:34px; border-radius:8px; }
+  .foot-brand b { font-family:'Fraunces',serif; font-size:1.05rem; }
+  .foot-links { display:flex; gap: 28px; flex-wrap: wrap; font-size:.95rem; color: var(--muted); }
+  .foot-links a:hover { color: var(--ink); }
+  .copy { margin-top: 36px; color: var(--faint); font-size: .85rem; }
+
+  /* reveal animation */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+
+  @media (max-width: 900px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 48px; }
+    .phone-stage { order: -1; }
+    .features { grid-template-columns: 1fr; }
+    .cats { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#">
+      <img src="logo.jpeg" alt="Hızlı Kültür logosu" />
+      <b>Hızlı Kültür</b>
+    </a>
+    <nav class="nav-links">
+      <a href="#ozellikler">Özellikler</a>
+      <a href="#kategoriler">Kategoriler</a>
+      <a href="#indir">İndir</a>
+      <a href="#gizlilik">Gizlilik</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <span class="eyebrow">Her gün biraz daha bilgili</span>
+      <h1>Merakı <em>besleyen</em><br />kültür uygulaması.</h1>
+      <p class="lede">Tarihten bilime, sanattan felsefeye — kısa bilgi kartları ve quizlerle aklında kalan bir öğrenme deneyimi.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#indir">
+          App Store'da indir
+        </a>
+        <a class="btn btn-ghost" href="#ozellikler">Nasıl çalışır?</a>
+      </div>
+      <p class="soon" style="margin-top:18px;">📱 iPhone için · iOS 18.2 ve üzeri</p>
+    </div>
+
+    <div class="phone-stage">
+      <div class="glow-ring"></div>
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="ph-notch"></div>
+          <div class="ph-tag">🏛️ Tarih</div>
+          <div class="ph-card">
+            <div class="cat">BUGÜNÜN KARTI</div>
+            <p>Sümerler, MÖ 3500'lerde bilinen ilk yazı sistemini icat etti.</p>
+          </div>
+          <div class="ph-dots"><span></span><span></span><span></span><span></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- category marquee -->
+  <div class="strip">
+    <div class="marquee" aria-hidden="true">
+      <span>🏛️ Tarih</span><span>🌍 Coğrafya</span><span>📚 Edebiyat</span><span>🔬 Bilim ve İcatlar</span><span>🎨 Sanat ve Müzik</span><span>🧠 Felsefe</span><span>🎬 Sinema ve Tiyatro</span><span>⚽️ Spor</span><span>💻 Teknoloji</span><span>✨ İlginç Bilgiler</span>
+      <span>🏛️ Tarih</span><span>🌍 Coğrafya</span><span>📚 Edebiyat</span><span>🔬 Bilim ve İcatlar</span><span>🎨 Sanat ve Müzik</span><span>🧠 Felsefe</span><span>🎬 Sinema ve Tiyatro</span><span>⚽️ Spor</span><span>💻 Teknoloji</span><span>✨ İlginç Bilgiler</span>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section id="ozellikler">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Neler sunuyor</span>
+      <h2>Öğrenmeyi günlük bir alışkanlığa dönüştürün.</h2>
+      <p>Kısa, doğrulanmış ve merak uyandıran içeriklerle vakit kaybetmeden öğrenin.</p>
+    </div>
+    <div class="features">
+      <div class="card reveal">
+        <div class="ic">🃏</div>
+        <h3>Bilgi Kartları</h3>
+        <p>Kaydırarak gezin, beğendiğin bilgileri kaydet. Kısa ve net kültür notları cebinde.</p>
+      </div>
+      <div class="card reveal">
+        <div class="ic">🧠</div>
+        <h3>Quiz Modu</h3>
+        <p>Çoktan seçmeli sorularla kendini sına, yanlışlarını tekrar ederek pekiştir.</p>
+      </div>
+      <div class="card reveal">
+        <div class="ic">📲</div>
+        <h3>Ana Ekran Widget'ı</h3>
+        <p>Her gün yeni bir bilgi doğrudan ana ekranında. Uygulamayı açmadan öğren.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section id="kategoriler" style="padding-top:0;">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">10 kategori</span>
+      <h2>İlgi alanına göre keşfet.</h2>
+    </div>
+    <div class="cats">
+      <div class="cat-chip reveal"><span class="em">🏛️</span><b>Tarih</b></div>
+      <div class="cat-chip reveal"><span class="em">🌍</span><b>Coğrafya</b></div>
+      <div class="cat-chip reveal"><span class="em">📚</span><b>Edebiyat</b></div>
+      <div class="cat-chip reveal"><span class="em">🔬</span><b>Bilim ve İcatlar</b></div>
+      <div class="cat-chip reveal"><span class="em">🎨</span><b>Sanat ve Müzik</b></div>
+      <div class="cat-chip reveal"><span class="em">🧠</span><b>Felsefe</b></div>
+      <div class="cat-chip reveal"><span class="em">🎬</span><b>Sinema ve Tiyatro</b></div>
+      <div class="cat-chip reveal"><span class="em">⚽️</span><b>Spor</b></div>
+      <div class="cat-chip reveal"><span class="em">💻</span><b>Teknoloji</b></div>
+      <div class="cat-chip reveal"><span class="em">✨</span><b>İlginç Bilgiler</b></div>
+    </div>
+  </div>
+</section>
+
+<!-- DOWNLOAD BAND -->
+<section id="indir" style="padding-top:0;">
+  <div class="wrap">
+    <div class="band reveal">
+      <img src="logo.jpeg" alt="Hızlı Kültür" />
+      <h2>Bilgi cebinde başlasın.</h2>
+      <p>Hızlı Kültür'ü indir, her gün birkaç dakikada dünyaya dair yeni bir şey öğren.</p>
+      <a class="btn btn-primary" href="#" style="font-size:1.05rem;">App Store'da yakında</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="gizlilik">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <img src="logo.jpeg" alt="" />
+        <b>Hızlı Kültür</b>
+      </div>
+      <nav class="foot-links">
+        <a href="#ozellikler">Özellikler</a>
+        <a href="#kategoriler">Kategoriler</a>
+        <a href="privacy.html">Gizlilik Politikası</a>
+        <a href="mailto:yasinsimmsekk@gmail.com">İletişim</a>
+      </nav>
+    </div>
+    <p class="copy">© 2026 Hızlı Kültür · Tüm hakları saklıdır.</p>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.14 });
+  document.querySelectorAll('.reveal').forEach((el, i) => {
+    el.style.transitionDelay = (i % 3) * 90 + 'ms';
+    io.observe(el);
+  });
+</script>
+
+</body>
+</html>

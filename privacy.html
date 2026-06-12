@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Gizlilik Politikası — Hızlı Kültür</title>
+<meta name="theme-color" content="#0e0a10" />
+<link rel="icon" href="logo.jpeg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Spectral:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg:#0e0a10; --bg-2:#15101a; --surface:#1c1620;
+    --ink:#efe7dd; --muted:#b3a79c; --faint:#7e7468;
+    --accent:#de5233; --accent-br:#f5704a; --line:rgba(243,236,226,.10);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background:var(--bg); color:var(--ink);
+    font-family:'Spectral',Georgia,serif; line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+  body::before{
+    content:""; position:fixed; inset:0; z-index:-1;
+    background:
+      radial-gradient(700px 500px at 80% -10%, rgba(222,82,51,.16), transparent 60%),
+      linear-gradient(180deg,var(--bg),var(--bg-2));
+  }
+  .wrap { max-width:760px; margin:0 auto; padding:0 28px; }
+  header { border-bottom:1px solid var(--line); position:sticky; top:0; backdrop-filter:blur(12px); background:rgba(14,10,16,.6); }
+  .nav { display:flex; align-items:center; gap:12px; height:68px; }
+  .nav img { width:34px; height:34px; border-radius:8px; }
+  .nav b { font-family:'Fraunces',serif; font-weight:600; font-size:1.1rem; }
+  .nav a.back { margin-left:auto; color:var(--muted); font-size:.92rem; }
+  .nav a.back:hover { color:var(--ink); }
+  a { color:var(--accent-br); text-decoration:none; }
+  main { padding:64px 0 90px; }
+  h1 { font-family:'Fraunces',serif; font-weight:400; font-size:clamp(2.2rem,5vw,3.1rem); letter-spacing:-.01em; margin-bottom:10px; }
+  .updated { color:var(--faint); font-size:.9rem; margin-bottom:40px; }
+  h2 { font-family:'Fraunces',serif; font-weight:500; font-size:1.4rem; margin:38px 0 12px; }
+  p, li { color:var(--muted); font-size:1.05rem; }
+  ul { padding-left:22px; margin-top:8px; }
+  li { margin-bottom:8px; }
+  footer { border-top:1px solid var(--line); padding:30px 0; color:var(--faint); font-size:.85rem; }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <img src="logo.jpeg" alt="" />
+    <b>Hızlı Kültür</b>
+    <a class="back" href="index.html">← Ana sayfa</a>
+  </div>
+</header>
+
+<main class="wrap">
+  <h1>Gizlilik Politikası</h1>
+  <p class="updated">Son güncelleme: 12 Haziran 2026</p>
+
+  <p>Hızlı Kültür uygulaması olarak gizliliğinize önem veriyoruz. Bu politika, uygulamayı kullanırken verilerinizin nasıl işlendiğini açıklar.</p>
+
+  <h2>Topladığımız Veriler</h2>
+  <p>Hızlı Kültür, sizi kişisel olarak tanımlayan bir hesap oluşturmanızı gerektirmez. Kaydettiğiniz bilgi kartları, quiz sonuçlarınız ve tercihleriniz yalnızca <strong>cihazınızda</strong> saklanır.</p>
+
+  <h2>Reklamlar</h2>
+  <p>Uygulamada Google AdMob aracılığıyla reklam gösterilebilir. AdMob, ilgi alanına dayalı reklamlar sunmak için cihaz tanımlayıcıları gibi verileri işleyebilir. Detaylar için <a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener">Google reklam politikalarına</a> bakabilirsiniz.</p>
+
+  <h2>Abonelikler</h2>
+  <p>Premium abonelikler RevenueCat ve Apple App Store altyapısı üzerinden yönetilir. Satın alma işlemleri Apple tarafından gerçekleştirilir; kart bilgileriniz bizimle paylaşılmaz.</p>
+
+  <h2>Üçüncü Taraf Hizmetler</h2>
+  <ul>
+    <li><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google AdMob</a> — reklam gösterimi</li>
+    <li><a href="https://www.revenuecat.com/privacy" target="_blank" rel="noopener">RevenueCat</a> — abonelik yönetimi</li>
+    <li><a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener">Apple</a> — uygulama dağıtımı ve satın almalar</li>
+  </ul>
+
+  <h2>Çocukların Gizliliği</h2>
+  <p>Uygulama, 13 yaşından küçük çocuklardan bilerek kişisel veri toplamaz.</p>
+
+  <h2>İletişim</h2>
+  <p>Gizlilikle ilgili sorularınız için: <a href="mailto:yasinsimmsekk@gmail.com">yasinsimmsekk@gmail.com</a></p>
+</main>
+
+<footer class="wrap">© 2026 Hızlı Kültür · Tüm hakları saklıdır.</footer>
+</body>
+</html>
